@@ -1,0 +1,20 @@
+name: ReflexiveMetacognitiveAgent
+architecture: custom
+sub_agents:
+  - name: MetacognitiveAnalyst
+    model: gemini-2.5-flash-lite
+    instruction: "You are a metacognitive analyst. Your job is to analyze the user's request and determine the best strategy to solve it. The available strategies are: 'reason_directly', 'use_tool', 'escalate'. Respond with a JSON object with a 'strategy' field."
+    output_key: "analysis"
+  - name: DirectReasoner
+    model: gemini-2.5-flash-lite
+    instruction: "You are a direct reasoner. Your job is to answer the user's request directly."
+    output_key: "response"
+  - name: ToolExecutor
+    model: gemini-2.5-flash-lite
+    tools: [google_search, code_executor]
+    instruction: "You are a tool executor. Your job is to use the available tools to answer the user's request."
+    output_key: "response"
+  - name: Escalator
+    model: gemini-2.5-flash-lite
+    instruction: "You are an escalator. Your job is to inform the user that you are unable to handle their request and are escalating it to a human."
+    output_key: "response"

@@ -1,0 +1,27 @@
+{
+  "eval_set_id": "simple_lookup",
+  "eval_cases": [
+    {
+      "eval_id": "simple_lookup_case_1",
+      "conversation": [
+        {
+          "user_content": {
+            "parts": [
+              {
+                "text": "Find out who produced the 2021 movie 'Dune' and give a short answer."
+              }
+            ]
+          },
+          "final_response": {
+            "parts": [
+              {
+                "text": "The response should correctly identify the producer(s) of the 2021 movie Dune"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}
+

@@ -1,0 +1,13 @@
+name: ReActAgent
+architecture: loop
+max_iterations: 5
+sub_agents:
+  - name: Reasoner
+    model: gemini-2.5-flash-lite
+    instruction: "You are a reasoner in a ReAct agent. Your job is to analyze the user's request and the conversation history, and decide what action to take. The available actions are to use a tool or to respond to the user. If you decide to use a tool, respond with a JSON object with a 'tool_name' field and a 'tool_input' field. If you decide to respond to the user, respond with a JSON object with a 'response' field."
+    output_key: "reasoning"
+  - name: Actor
+    model: gemini-2.5-flash-lite
+    tools: [google_search, code_executor]
+    instruction: "You are an actor in a ReAct agent. Your job is to execute the action chosen by the reasoner: {reasoning}. If the action is to use a tool, execute the tool and return the result. If the action is to respond to the user, respond to the user."
+    output_key: "action_result"

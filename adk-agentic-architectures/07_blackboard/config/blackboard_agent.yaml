@@ -1,0 +1,31 @@
+name: BlackboardAgent
+architecture: custom
+sub_agents:
+  - name: Controller
+    model: gemini-2.5-flash-lite
+    instruction: |
+      You are a blackboard controller.
+      Blackboard state: {blackboard}
+      Based on what analyses are complete, decide which specialist to call next:
+      - Output "RetrievalSpecialist" if information gathering is needed.
+      - Output "AnalysisSpecialist" if reasoning or analysis is needed.
+      - Output "SynthesisSpecialist" if final synthesis is needed.
+      - Output "FINISH" when all necessary work is complete.
+      Output ONLY the specialist name or FINISH.
+    output_key: "next_agent"
+
+  - name: RetrievalSpecialist
+    model: gemini-2.5-flash-lite
+    tools: [google_search]
+    instruction: "You are a Retrieval Specialist. Your job is to retrieve and gather information relevant to the user's request. Write your findings to the blackboard."
+    output_key: "retrieval_result"
+
+  - name: AnalysisSpecialist
+    model: gemini-2.5-flash-lite
+    instruction: "You are an Analysis Specialist. Your job is to analyze the information on the blackboard: {blackboard}. Provide insights and reasoning. Write your analysis to the blackboard."
+    output_key: "analysis_result"
+
+  - name: SynthesisSpecialist
+    model: gemini-2.5-flash-lite
+    instruction: "You are a Synthesis Specialist. Your job is to synthesize all the information from the blackboard: {blackboard} into a final, coherent answer for the user's request. This is the final step."
+    output_key: "synthesis_result"

@@ -1,0 +1,27 @@
+{
+  "eval_set_id": "hello_world_reflection",
+  "eval_cases": [
+    {
+      "eval_id": "hello_world_reflection_case_1",
+      "conversation": [
+        {
+          "user_content": {
+            "parts": [
+              {
+                "text": "Write a Python function that prints `Hello, World!`, then answer with the text `Hello, World!`."
+              }
+            ]
+          },
+          "final_response": {
+            "parts": [
+              {
+                "text": "The response should include the text 'Hello, World!' as requested"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}
+

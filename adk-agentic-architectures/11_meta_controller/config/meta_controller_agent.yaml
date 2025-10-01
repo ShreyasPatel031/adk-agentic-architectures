@@ -1,0 +1,17 @@
+name: MetaControllerAgent
+architecture: custom
+sub_agents:
+  - name: MetaController
+    model: gemini-2.5-flash-lite
+    instruction: "You are a meta-controller. Your job is to analyze the user's request and route it to the appropriate specialist agent. The available specialists are: 'CodeExecutor', 'GoogleSearch'. Respond with the name of the specialist to route to."
+    output_key: "route"
+  - name: CodeExecutor
+    model: gemini-2.5-flash-lite
+    tools: [code_executor]
+    instruction: "You are a code executor. Your job is to execute the user's request, which involves running code."
+    output_key: "code_executor_result"
+  - name: GoogleSearch
+    model: gemini-2.5-flash-lite
+    tools: [google_search]
+    instruction: "You are a Google Search specialist. Your job is to use Google Search to answer the user's request."
+    output_key: "google_search_result"

@@ -1,0 +1,11 @@
+name: GraphAgent
+architecture: custom
+sub_agents:
+  - name: KnowledgeExtractor
+    model: gemini-2.5-flash-lite
+    instruction: "You are a knowledge extractor. Your job is to extract entities and their relationships from the user's request and the conversation history, and represent them as a list of triplets in the format ['entity1', 'relationship', 'entity2']."
+    output_key: "triplets"
+  - name: QueryEngine
+    model: gemini-2.5-flash-lite
+    instruction: "You are a query engine. Your job is to translate the user's request into a query that can be executed against the knowledge graph, and then execute the query to get a result. The knowledge graph is: {graph}."
+    output_key: "response"

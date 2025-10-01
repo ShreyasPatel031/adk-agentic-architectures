@@ -1,0 +1,25 @@
+name: EnsembleAgent
+architecture: sequential
+sub_agents:
+  - name: ParallelAgents
+    architecture: parallel
+    sub_agents:
+      - name: Specialist1
+        model: gemini-2.5-flash-lite
+        tools: [google_search]
+        instruction: "You are a film industry analyst. Your job is to identify the production companies behind the user's request."
+        output_key: "specialist1_response"
+      - name: Specialist2
+        model: gemini-2.5-flash-lite
+        tools: [google_search]
+        instruction: "You are a movie trivia expert. Your job is to identify the individual producers of the user's request."
+        output_key: "specialist2_response"
+      - name: Specialist3
+        model: gemini-2.5-flash-lite
+        tools: [google_search]
+        instruction: "You are a Hollywood historian. Your job is to provide context and background information about the producers of the user's request."
+        output_key: "specialist3_response"
+  - name: Synthesizer
+    model: gemini-2.5-flash-lite
+    instruction: "You are a synthesizer. Your job is to synthesize the responses from the specialist agents into a single, coherent response. Identify common themes and discrepancies between the responses, and provide a comprehensive answer that takes all of the responses into account. The responses are: {specialist1_response}, {specialist2_response}, {specialist3_response}."
+    output_key: "response"

@@ -1,0 +1,26 @@
+name: CellularAutomataAgent
+architecture: sequential
+sub_agents:
+  - name: Seeder
+    model: gemini-2.5-flash-lite
+    instruction: "You are a seeder. Your job is to set the initial state of the cells in the cellular automaton. Set cell1_state to 'ALIVE' and cell2_state to 'DEAD'."
+    output_key: "initial_state"
+  - name: Automaton
+    architecture: loop
+    max_iterations: 10
+    sub_agents:
+      - name: Grid
+        architecture: parallel
+        sub_agents:
+          - name: Cell1
+            model: gemini-2.5-flash-lite
+            instruction: "You are a cell in a cellular automaton. Your current state is {cell1_state | default('ALIVE')}. Your neighbors' states are {cell2_state | default('DEAD')}. Update your state based on the rules of the automaton and output only the new state."
+            output_key: "cell1_state"
+          - name: Cell2
+            model: gemini-2.5-flash-lite
+            instruction: "You are a cell in a cellular automaton. Your current state is {cell2_state | default('DEAD')}. Your neighbors' states are {cell1_state | default('ALIVE')}. Update your state based on the rules of the automaton and output only the new state."
+            output_key: "cell2_state"
+  - name: Collector
+    model: gemini-2.5-flash-lite
+    instruction: "You are a collector. Your job is to collect the final state of the cells in the cellular automaton and generate a final response. The final states are: cell1: {cell1_state}, cell2: {cell2_state}."
+    output_key: "response"

@@ -1,0 +1,8 @@
+name: EpisodicSemanticAgent
+model: gemini-2.5-flash-lite
+architecture: single # Changed from loop to single
+tools:
+  - google_search
+instruction: |
+  You are a helpful AI assistant. Answer the user's request directly and concisely.
+  Use your tools when needed.

@@ -1,0 +1,19 @@
+name: PEVSequentialAgent
+architecture: sequential
+sub_agents:
+  - name: Planner
+    model: gemini-2.5-flash-lite
+    instruction: |
+      You are a planner. Your job is to create a clear, step-by-step plan to answer the user's request.
+      The next agent will execute this plan. Do not execute any steps yourself.
+      Output ONLY the plan, nothing else.
+
+  - name: Executor
+    model: gemini-2.5-flash-lite
+    tools:
+      - google_search
+      - code_executor
+    instruction: |
+      You are an executor. You will be given a plan and some context from previous steps.
+      Your job is to execute the *next* step in the plan using your tools.
+      After executing the step, provide a summary of what you did and the result.

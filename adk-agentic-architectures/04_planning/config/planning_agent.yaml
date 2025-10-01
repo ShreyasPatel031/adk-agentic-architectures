@@ -1,0 +1,19 @@
+name: PlanningAgent
+architecture: sequential
+sub_agents:
+  - name: Planner
+    model: gemini-2.5-flash-lite
+    instruction: "You are a planner. Create a step-by-step plan to answer the user's request. Output ONLY the plan."
+    output_key: "plan"
+
+  - name: Executor
+    model: gemini-2.5-flash-lite
+    tools:
+      - google_search
+      - code_executor
+    instruction: "You are an executor. You will be given a plan. Execute the plan: {plan}. Output the raw results of the execution."
+    output_key: "results"
+
+  - name: Synthesizer
+    model: gemini-2.5-flash-lite
+    instruction: "You are a synthesizer. You will be given execution results. Synthesize the results: {results} into a final, comprehensive answer for the user."

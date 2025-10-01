@@ -1,0 +1,27 @@
+{
+  "eval_set_id": "plan_then_act",
+  "eval_cases": [
+    {
+      "eval_id": "plan_then_act_case_1",
+      "conversation": [
+        {
+          "user_content": {
+            "parts": [
+              {
+                "text": "Outline a short plan to extract a number from text, then output the number 123 from `ID:123`."
+              }
+            ]
+          },
+          "final_response": {
+            "parts": [
+              {
+                "text": "The response should include a plan for extracting numbers from text, and should successfully extract and output the number 123 from the given text 'ID:123'"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}
+

@@ -1,0 +1,13 @@
+
+# Default config for the ADK Root Agent (agent-agnostic)
+name: RootAgent
+model: gemini-2.5-flash-lite
+instruction: |
+  You are a helpful AI assistant. When asked to use tools, search for information, or find things out, USE the available tools. Keep responses concise and direct.
+temperature: 0.0
+max_turns: 8
+tools:
+  - google_search
+architecture: single
+tool_timeouts:
+  default_seconds: 20

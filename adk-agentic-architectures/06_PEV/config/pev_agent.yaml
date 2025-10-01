@@ -1,0 +1,34 @@
+name: PEVAgent
+architecture: sequential
+sub_agents:
+  - name: PEVRetries
+    architecture: loop
+    max_iterations: 3
+    sub_agents:
+      - name: Planner
+        model: gemini-2.5-flash-lite
+        instruction: |
+          Analyze the user's request and previous attempts. Create a concise, step-by-step plan.
+          If there was a verification failure, create a NEW plan to fix it.
+          Output ONLY the plan.
+        output_key: "plan"
+
+      - name: Executor
+        model: gemini-2.5-flash-lite
+        tools:
+          - google_search
+          - code_executor
+        instruction: "You are an executor. Execute the plan: {plan}. Output the raw results."
+        output_key: "result"
+
+      - name: Verifier
+        model: gemini-2.5-flash-lite
+        instruction: |
+          You are a verifier. Review the execution result: {result}.
+          If the result successfully answers the request, output a JSON object with 'status': 'SUCCESS' and 'final_result': [the final answer].
+          If it fails, output a JSON object with 'status': 'FAILURE' and 'reason': [the reason for failure].
+        output_key: "verification"
+
+  - name: Synthesizer
+    model: gemini-2.5-flash-lite
+    instruction: "You are the final synthesizer. The PEV process is complete. Your job is to present the final, verified result to the user. The final result is in the 'result' key from the Executor's output. Present it clearly."

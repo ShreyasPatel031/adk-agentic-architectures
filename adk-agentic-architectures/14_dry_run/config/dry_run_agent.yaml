@@ -1,0 +1,16 @@
+name: DryRunAgent
+architecture: custom
+sub_agents:
+  - name: Proposer
+    model: gemini-2.5-flash-lite
+    instruction: "You are a proposer. Your job is to propose a plan to solve the user's request."
+    output_key: "plan"
+  - name: DryRunExecutor
+    model: gemini-2.5-flash-lite
+    instruction: "You are a dry-run executor. Your job is to perform a dry run of the proposed plan: {plan} and identify any potential issues or errors. Do not actually execute the plan. Your output will be shown to the user for approval."
+    output_key: "dry_run_results"
+  - name: FinalExecutor
+    model: gemini-2.5-flash-lite
+    tools: [google_search, code_executor]
+    instruction: "You are a final executor. Your job is to execute the plan: {plan}."
+    output_key: "response"

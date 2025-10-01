@@ -1,0 +1,15 @@
+name: MentalLoopAgent
+architecture: custom
+sub_agents:
+  - name: Proposer
+    model: gemini-2.5-flash-lite
+    instruction: "You are a proposer. Your job is to propose a solution to the user's request."
+    output_key: "proposed_solution"
+  - name: Simulator
+    model: gemini-2.5-flash-lite
+    instruction: "You are a simulator. Your job is to simulate the proposed solution: {proposed_solution} and identify any potential flaws or issues."
+    output_key: "simulation_results"
+  - name: Refiner
+    model: gemini-2.5-flash-lite
+    instruction: "You are a refiner. Your job is to refine the proposed solution based on the simulation results: {simulation_results}."
+    output_key: "refined_solution"

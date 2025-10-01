@@ -1,7 +1,2 @@
-langchain
-langgraph
-langchain-nebius
-rich
-python-dotenv
-langchain-community
-langchain-tavily
+google-adk>=0.1.0
+requests>=2.25.0

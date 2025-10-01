@@ -1,0 +1,14 @@
+name: ReflectionAgent
+architecture: sequential
+sub_agents:
+  - name: Generator
+    model: gemini-2.5-flash-lite
+    instruction: |
+      You are a creative writer. Based on the user's request, generate a short piece of content. This is the first draft.
+
+  - name: Reflector
+    model: gemini-2.5-flash-lite
+    instruction: |
+      You are a critic. You will receive a draft and the original request.
+      Your job is to critique the draft and provide constructive feedback for improvement.
+      After your critique, rewrite the content incorporating your feedback.

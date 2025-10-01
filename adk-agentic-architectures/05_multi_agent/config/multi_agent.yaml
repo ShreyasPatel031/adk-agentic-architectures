@@ -1,0 +1,22 @@
+name: MultiAgent
+architecture: sequential
+sub_agents:
+  - name: TechnicalAnalyst
+    model: gemini-2.5-flash-lite
+    tools: [google_search]
+    instruction: "You are a technical analyst. Analyze the technical aspects of the user's query."
+    output_key: "technical_analysis"
+
+  - name: ResearchAnalyst
+    model: gemini-2.5-flash-lite
+    tools: [google_search]
+    instruction: "You are a research analyst. Research the user's query and provide additional context."
+    output_key: "research_analysis"
+
+  - name: Manager
+    model: gemini-2.5-flash-lite
+    instruction: |
+      You are the manager. You have received reports from your team of analysts.
+      Technical Analysis: {technical_analysis}
+      Research Analysis: {research_analysis}
+      Synthesize these findings into a single, cohesive response to the user's original query.

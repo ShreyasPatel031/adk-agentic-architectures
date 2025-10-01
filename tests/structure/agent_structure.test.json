@@ -1,0 +1,26 @@
+{
+  "eval_set_id": "agent_structure_validation",
+  "eval_cases": [
+    {
+      "eval_id": "basic_structure",
+      "conversation": [
+        {
+          "user_content": {
+            "parts": [
+              {
+                "text": "Hello"
+              }
+            ]
+          },
+          "final_response": {
+            "parts": [
+              {
+                "text": "response"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

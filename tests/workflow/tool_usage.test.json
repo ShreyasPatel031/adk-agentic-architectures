@@ -1,0 +1,26 @@
+{
+  "eval_set_id": "workflow_tool_usage",
+  "eval_cases": [
+    {
+      "eval_id": "tool_usage_case_1",
+      "conversation": [
+        {
+          "user_content": {
+            "parts": [
+              {
+                "text": "Find out what the capital of France is"
+              }
+            ]
+          },
+          "final_response": {
+            "parts": [
+              {
+                "text": "Paris"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

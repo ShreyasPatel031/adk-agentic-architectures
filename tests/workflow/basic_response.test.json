@@ -1,0 +1,26 @@
+{
+  "eval_set_id": "workflow_basic_response",
+  "eval_cases": [
+    {
+      "eval_id": "basic_response_case_1",
+      "conversation": [
+        {
+          "user_content": {
+            "parts": [
+              {
+                "text": "Hello"
+              }
+            ]
+          },
+          "final_response": {
+            "parts": [
+              {
+                "text": "Hello"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

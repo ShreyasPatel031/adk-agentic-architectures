@@ -1,0 +1,15 @@
+name: RlhfAgent
+architecture: sequential
+sub_agents:
+  - name: Generator
+    model: gemini-2.5-flash-lite
+    instruction: "You are a generator. Your job is to generate a response to the user's request."
+    output_key: "generated_response"
+  - name: Critic
+    model: gemini-2.5-flash-lite
+    instruction: "You are a critic. Your job is to critique the generated response: {generated_response} and provide feedback for improvement."
+    output_key: "critique"
+  - name: Refiner
+    model: gemini-2.5-flash-lite
+    instruction: "You are a refiner. Your job is to refine the generated response based on the critique: {critique}."
+    output_key: "refined_response"
