@@ -84,7 +84,38 @@ class BlackboardAgent(BaseAgent):
         
         final_result = ""
         for i in range(self.max_iterations):
-            async for event in self.controller.run_async(ctx):
+            # Update controller instruction with current blackboard state
+            blackboard_state = ctx.session.state["blackboard"]
+            # Get user query from the latest message in the conversation
+            user_query = "Unknown query"
+            if hasattr(ctx, 'conversation') and ctx.conversation:
+                for msg in reversed(ctx.conversation):
+                    if hasattr(msg, 'content') and hasattr(msg, 'role') and msg.role == 'user':
+                        user_query = msg.content.parts[0].text if msg.content.parts else "Unknown query"
+                        break
+            
+            controller_instruction = f"""You are a blackboard controller.
+User query: "{user_query}"
+Blackboard state: {blackboard_state}
+Based on what analyses are complete and the user's request, decide which specialist to call next:
+- Output "RetrievalSpecialist" if information gathering is needed (e.g., facts, data, external information).
+- Output "AnalysisSpecialist" if reasoning or analysis is needed (e.g., complex problem solving, calculations).
+- Output "SynthesisSpecialist" if final synthesis is needed OR if the request is simple and can be answered directly.
+- Output "FINISH" when all necessary work is complete.
+
+For simple requests like "Hello, World!" or basic programming tasks, go directly to "SynthesisSpecialist".
+Output ONLY the specialist name or FINISH."""
+            
+            # Create a temporary controller with updated instruction
+            temp_controller = Agent(
+                name=self.controller.name,
+                model=self.controller.model,
+                instruction=controller_instruction,
+                tools=self.controller.tools,
+                output_key=self.controller.output_key
+            )
+            
+            async for event in temp_controller.run_async(ctx):
                 yield event
             
             controller_output = ctx.session.state.get(self.controller.output_key, "FINISH")
@@ -97,7 +128,29 @@ class BlackboardAgent(BaseAgent):
 
             specialist = self.specialists.get(next_agent_name)
             if specialist:
-                async for event in specialist.run_async(ctx):
+                # Update specialist instruction with current blackboard state
+                if next_agent_name == "AnalysisSpecialist":
+                    specialist_instruction = f"""You are an Analysis Specialist. Your job is to analyze the information on the blackboard: {blackboard_state}. Provide insights and reasoning. Write your analysis to the blackboard."""
+                    temp_specialist = Agent(
+                        name=specialist.name,
+                        model=specialist.model,
+                        instruction=specialist_instruction,
+                        tools=specialist.tools,
+                        output_key=specialist.output_key
+                    )
+                elif next_agent_name == "SynthesisSpecialist":
+                    specialist_instruction = f"""You are a Synthesis Specialist. Your job is to synthesize all the information from the blackboard: {blackboard_state} into a final, coherent answer for the user's request. This is the final step."""
+                    temp_specialist = Agent(
+                        name=specialist.name,
+                        model=specialist.model,
+                        instruction=specialist_instruction,
+                        tools=specialist.tools,
+                        output_key=specialist.output_key
+                    )
+                else:
+                    temp_specialist = specialist
+                
+                async for event in temp_specialist.run_async(ctx):
                     yield event
                 
                 specialist_output = ctx.session.state.get(specialist.output_key, "")

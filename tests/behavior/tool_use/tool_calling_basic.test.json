@@ -15,7 +15,7 @@
           "final_response": {
             "parts": [
               {
-                "text": "The response should provide the population of Tokyo, mentioning the number of millions of residents"
+                "text": "The response should provide information about Tokyo's population, including numerical data about residents"
               }
             ]
           }

@@ -1,140 +1,149 @@
-# ADK Evaluation Tests — Agent Configuration Validation
+# ADK Agent Evaluation & Testing Guide
 
-This repository includes a **minimal, agent-agnostic** evaluation suite for Google's **Agent Development Kit (ADK)**.  
+This guide explains how to test and validate ADK agents using our comprehensive test suite.
 
-These tests validate **basic functionality and correct configuration** — not AI quality or advanced reasoning.
+## 🎯 What This Test Suite Does
 
-> 💡 **Key principle:** These tests must be passable by *any* properly configured ADK agent - single `LlmAgent` or workflow agents (`SequentialAgent`, `LoopAgent`, `ParallelAgent`).
+**Purpose**: Validate that your ADK agents are **properly configured and functional** - not to test AI quality or reasoning accuracy.
 
----
+**Key Principle**: These tests should be passable by ANY properly configured ADK agent (single `LlmAgent` or workflow agents like `SequentialAgent`, `LoopAgent`, `ParallelAgent`).
 
-## ✅ **Validated Agent Examples**
+## 📊 Test Results Interpretation
 
-| Agent Type | Tests Passed | Status |
-|-----------|--------------|--------|
-| **Demo (LlmAgent)** | 4/4 (100%) | ✅ Perfect |
-| **Sequential** | 4/4 (100%) | ✅ Perfect |
-| **Loop** | 4/4 (100%) | ✅ Perfect |
-| **Parallel** | 3/4 (75%) | ✅ Acceptable |
+| Status | Score | Meaning | Action Required |
+|--------|-------|---------|----------------|
+| ✅ **Perfect** | 4/4 (100%) | Agent properly configured | None - ready for use |
+| ✅ **Good** | 3/4 (75%) | Agent works, minor AI variability | None - acceptable |
+| ⚠️ **Review** | 2/4 (50%) | Possible configuration issue | Check agent setup |
+| ❌ **Failed** | 0-1/4 | Configuration errors | Fix before using |
 
-**All ADK workflow agent types are validated and working.**
+## 🧪 Test Categories
 
----
-
-## 📦 ADK Test File Schema
-
-Each `*.test.json` follows ADK's `EvalSet` schema:
-
-```json
-{
-  "eval_set_id": "test_name",
-  "eval_cases": [
-    {
-      "eval_id": "test_case_id",
-      "conversation": [
-        {
-          "user_content": {
-            "parts": [{"text": "Your query here"}]
-          },
-          "final_response": {
-            "parts": [{"text": "Expected keyword/phrase"}]
-          }
-        }
-      ]
-    }
-  ]
-}
-```
-
-Each test includes `test_config.json` with evaluation criteria:
-
-```json
-{
-  "criteria": {
-    "response_match_score": 0.01,
-    "tool_trajectory_avg_score": 1.0
-  }
-}
-```
-
----
-
-## 🗂 Test Suite Layout
-
-```
-tests/behavior/
-  reflection/
-    hello_world_reflection.test.json  # Basic response generation
-    test_config.json                  # response_match_score: 0.01
-  tool_use/
-    tool_calling_basic.test.json      # Tool invocation capability
-    test_config.json                  # response_match + tool_trajectory: 1.0
-  react/
-    simple_lookup.test.json           # Iterative reasoning with tools
-    test_config.json                  # response_match: 0.01, tools: 1.0
-  planning/
-    plan_then_act.test.json           # Structured task execution
-    test_config.json                  # response_match_score: 0.01
-```
-
----
-
-## 🧪 What Each Test Validates
-
-### 1. Reflection Test
-**Goal:** Verify the agent can generate a response
-
+### 1. **Reflection Test** (`hello_world_reflection`)
+- **Goal**: Basic response generation
 - **Prompt**: "Write a Python function that prints `Hello, World!`, then answer with the text `Hello, World!`."
 - **Pass Criteria**: ROUGE-L ≥ 0.01 (agent responded with relevant text)
-- **What it tests**: Basic agent execution and response generation
+- **What it catches**: Import errors, agent crashes, basic execution issues
 
-### 2. Tool Use Test
-**Goal:** Verify tool invocation works
-
+### 2. **Tool Use Test** (`tool_calling_basic`)
+- **Goal**: Tool invocation capability
 - **Prompt**: "Find out what the population of Tokyo is."
-- **Pass Criteria**:
+- **Pass Criteria**: 
   - Tool was called (`tool_trajectory_avg_score: 1.0`)
-  - Response contains relevant text (ROUGE-L ≥ 0.01)
-- **What it tests**: Tool pipeline functionality
+  - Response contains relevant text (ROUGE-L ≥ 0.005)
+- **What it catches**: Tool registration failures, tool calling issues
 
-### 3. ReAct Test
-**Goal:** Verify reasoning with tools
-
+### 3. **ReAct Test** (`simple_lookup`)
+- **Goal**: Iterative reasoning with tools
 - **Prompt**: "Find out who produced the 2021 movie 'Dune' and give a short answer."
 - **Pass Criteria**:
   - Tool was called (`tool_trajectory_avg_score: 1.0`)
   - Response contains relevant text (ROUGE-L ≥ 0.01)
-- **What it tests**: Iterative reasoning and tool usage
+- **What it catches**: Multi-step reasoning issues, tool integration problems
 
-### 4. Planning Test
-**Goal:** Verify structured task execution
-
+### 4. **Planning Test** (`plan_then_act`)
+- **Goal**: Structured task execution
 - **Prompt**: "Outline a short plan to extract a number from text, then output the number 123 from `ID:123`."
 - **Pass Criteria**: ROUGE-L ≥ 0.01 (agent processed the request)
-- **What it tests**: Task comprehension and execution
+- **What it catches**: Task comprehension issues, execution flow problems
 
----
-
-## ✅ Running Tests
+## 🚀 How to Run Tests
 
 ### Quick Test (Single Agent)
 ```bash
 export GOOGLE_API_KEY=your_api_key_here
-./tests/run_all_tests.sh agent/
+./tests/run_all_tests.sh adk-agentic-architectures/01_reflection/
+```
+
+### Test All Agents
+```bash
+./test_all_agents.sh
+```
+
+### Quick Sample Test (First 3 Agents)
+```bash
+./tests/test_sample_agents.sh
 ```
 
 ### Individual Test
 ```bash
-adk eval agent/ tests/behavior/reflection/hello_world_reflection.test.json \
+adk eval adk-agentic-architectures/01_reflection/ \
+  tests/behavior/reflection/hello_world_reflection.test.json \
   --config_file_path=tests/behavior/reflection/test_config.json
 ```
 
-### Workflow Agents Test
+### Interactive Testing (Fastest for Development)
 ```bash
-./tests/test_workflow_agents.sh
+adk web adk-agentic-architectures/01_reflection/
+# Opens UI at http://localhost:8000
+# Test queries immediately without running full test suite
 ```
 
----
+## 🔧 Common Issues & Solutions
+
+### Issue: "Tests passed: 0"
+**Symptoms**: All tests failing
+**Causes**: 
+- Missing `__init__.py` or incorrect exports
+- Import errors in agent code
+- Missing required dependencies
+
+**Solution**:
+```bash
+# Check structure first
+python3 tests/validate_agent.py adk-agentic-architectures/your_agent/
+```
+
+### Issue: "tool_trajectory_avg_score: 0.0"
+**Symptoms**: Tools not being called
+**Causes**:
+- Tools not properly registered
+- Agent instructions don't encourage tool use
+- Workflow agent sub-agents can't access tools
+
+**Solution**:
+```bash
+# Test interactively to see tool calls
+adk web adk-agentic-architectures/your_agent/
+# Try: "Find the capital of France"
+# Watch event stream for tool calls
+```
+
+### Issue: "response_match_score: 0.0"
+**Symptoms**: Response doesn't match expected
+**Causes**:
+- Agent answering internal process instead of user question
+- Agent outputting verification status instead of answer
+
+**Solution**:
+```bash
+# See actual response
+adk eval adk-agentic-architectures/your_agent/ \
+  tests/behavior/reflection/hello_world_reflection.test.json \
+  --config_file_path=tests/behavior/reflection/test_config.json \
+  --print_detailed_results
+```
+
+## 📁 Test File Structure
+
+```
+tests/
+├── validate_agent.py              # Structure validation
+├── run_all_tests.sh              # Single agent test runner
+├── behavior/
+│   ├── reflection/
+│   │   ├── hello_world_reflection.test.json
+│   │   └── test_config.json
+│   ├── tool_use/
+│   │   ├── tool_calling_basic.test.json
+│   │   └── test_config.json
+│   ├── react/
+│   │   ├── simple_lookup.test.json
+│   │   └── test_config.json
+│   └── planning/
+│       ├── plan_then_act.test.json
+│       └── test_config.json
+```
 
 ## 🎯 What These Tests Catch
 
@@ -158,52 +167,42 @@ adk eval agent/ tests/behavior/reflection/hello_world_reflection.test.json \
 - Specific implementation details
 - Performance/speed
 
----
+## 🔄 Development Workflow
 
-## 📊 Pass Criteria
+### 1. Structure Validation (Instant)
+```bash
+python3 tests/validate_agent.py adk-agentic-architectures/your_agent/
+```
+- Catches import errors immediately
+- Verifies module structure
+- No API calls, runs in <1 second
 
-| Status | Score | Meaning |
-|--------|-------|---------|
-| ✅ **Perfect** | 4/4 (100%) | Agent properly configured |
-| ✅ **Acceptable** | 3/4 (75%) | Agent works, minor AI variability |
-| ⚠️ **Review** | 2/4 (50%) | Possible configuration issue |
-| ❌ **Failed** | 0-1/4 | Configuration errors |
+### 2. Interactive Testing (Fast)
+```bash
+adk web adk-agentic-architectures/your_agent/
+```
+- Test queries immediately
+- See full event stream and responses
+- Faster than running full test suite
 
----
+### 3. Single Test (Focused)
+```bash
+adk eval adk-agentic-architectures/your_agent/ \
+  tests/behavior/reflection/hello_world_reflection.test.json \
+  --config_file_path=tests/behavior/reflection/test_config.json \
+  --print_detailed_results
+```
+- See actual vs expected responses
+- Check tool trajectory
+- Identify specific issues
 
-## 🚀 Agent Examples
-
-### 1. LlmAgent (Single Agent)
-**Location**: `/agent/`  
-**Pattern**: Basic single-agent  
-**Tests**: 4/4 ✅
-
-### 2. SequentialAgent (Multi-Stage Pipeline)
-**Location**: `/agent/sequential_example/`  
-**Pattern**: Analyzer → Responder  
-**Tests**: 4/4 ✅
-
-### 3. LoopAgent (Iterative Processing)
-**Location**: `/agent/loop_example/`  
-**Pattern**: Worker with tools, single iteration  
-**Tests**: 4/4 ✅
-
-### 4. ParallelAgent (Concurrent Execution)
-**Location**: `/agent/parallel_example/`  
-**Pattern**: Multiple analysts in parallel  
-**Tests**: 3/4 ✅
-
----
-
-## 🔧 ADK Framework Limitations
-
-### Known Issue: Nested Function Calling
-- **Problem**: Workflow agent sub-agents cannot use tools in some configurations
-- **References**: [GitHub Issue #53](https://github.com/google/adk-python/issues/53), [Issue #134](https://github.com/google/adk-python/issues/134)
-- **Workaround**: Use `AgentTool` wrapper or put tools in first sub-agent only
-- **Impact**: Limited for some LoopAgent patterns, but SequentialAgent works well
-
----
+### 4. Full Test Suite (Complete)
+```bash
+./tests/run_all_tests.sh adk-agentic-architectures/your_agent/
+```
+- Comprehensive validation
+- All test categories
+- Final verification before deployment
 
 ## 📚 Resources
 
@@ -211,6 +210,7 @@ adk eval agent/ tests/behavior/reflection/hello_world_reflection.test.json \
 - [Sequential Agents](https://google.github.io/adk-docs/agents/workflow-agents/sequential-agents/)
 - [Loop Agents](https://google.github.io/adk-docs/agents/workflow-agents/loop-agents/)
 - [Parallel Agents](https://google.github.io/adk-docs/agents/workflow-agents/parallel-agents/)
+- [Custom Agents](https://google.github.io/adk-docs/agents/custom-agents/)
 
 ---
 

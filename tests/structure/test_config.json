@@ -1,5 +1,5 @@
 {
   "criteria": {
-    "response_match_score": 0.001
+    "response_match_score": 0.01
   }
 }

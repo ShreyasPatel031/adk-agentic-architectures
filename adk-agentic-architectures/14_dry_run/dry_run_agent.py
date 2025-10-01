@@ -90,10 +90,35 @@ class DryRunAgent(BaseAgent):
         
         dry_run_results = ctx.session.state.get(self.dry_runner.output_key, "")
         
-        # 3. Approval
-        approval = "y"
-        if "error" in dry_run_results.lower() or "issue" in dry_run_results.lower():
-            approval = "n"
+        # 3. Approval - use an AI agent to make the approval decision
+        approval_agent = Agent(
+            name="ApprovalAgent",
+            model="gemini-2.5-flash-lite",
+            instruction=f"""You are an approval agent. Your job is to review the dry run results and decide whether to approve or reject the plan.
+
+Plan: {plan}
+Dry Run Results: {dry_run_results}
+
+Based on the dry run results, decide if the plan should be approved for execution. 
+- Approve (respond with "APPROVE") if the plan is safe and will work correctly
+- Reject (respond with "REJECT") if the plan has critical issues that would cause failures or harm
+
+Consider:
+- Are there any critical errors that would prevent execution?
+- Are there any safety concerns?
+- Is the plan technically sound?
+- Are there any blocking issues?
+
+Respond with ONLY "APPROVE" or "REJECT".""",
+            output_key="approval_decision"
+        )
+        
+        # Run approval agent
+        async for event in approval_agent.run_async(ctx):
+            yield event
+        
+        approval_result = ctx.session.state.get(approval_agent.output_key, "REJECT").strip()
+        approval = "y" if approval_result == "APPROVE" else "n"
         
         if approval.lower() == "y":
             # 4. Execute
