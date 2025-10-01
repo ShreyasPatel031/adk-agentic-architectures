@@ -15,6 +15,7 @@ from dataclasses import dataclass, field
 from google.adk.agents import Agent, BaseAgent, LlmAgent, SequentialAgent, LoopAgent
 from google.adk.agents.invocation_context import InvocationContext
 from google.adk.events import Event, EventActions
+from google.genai import types
 
 # Built-in tools registry
 _BUILTIN_TOOL_REGISTRY: Dict[str, Any] = {}
@@ -87,7 +88,11 @@ class MetaControllerAgent(BaseAgent):
                 yield event
         else:
             # Default to a generic response if the route is not found.
-            yield Event(author=self.name, content={"parts": [{"text": "Could not determine a route for the request."}]})
+            yield Event(
+                invocation_id=ctx.invocation_id,
+                author=self.name,
+                content=types.Content(parts=[types.Part(text="Could not determine a route for the request.")])
+            )
 
 
 def build_agent_from_config(config: Union[SubAgentConfig, WorkflowAgentConfig]) -> BaseAgent:

@@ -1,0 +1,209 @@
+======================================================================
+COMPREHENSIVE ADK AGENT TEST SUITE
+======================================================================
+Testing 17 agents with 4 behavior tests each (68 total tests)
+
+
+======================================================================
+Testing: 01_reflection
+======================================================================
+  hello_world_reflection ... ❌ FAIL
+    Error: Eval module is not installed, please install via `pip install "google-adk[eval]"`.
+  tool_calling_basic ... ❌ FAIL
+    Error: Eval module is not installed, please install via `pip install "google-adk[eval]"`.
+  simple_lookup ... ❌ FAIL
+    Error: Eval module is not installed, please install via `pip install "google-adk[eval]"`.
+  plan_then_act ... ❌ FAIL
+    Error: Eval module is not installed, please install via `pip install "google-adk[eval]"`.
+  Summary: ❌ FAILED (0/4 tests, 0%)
+
+======================================================================
+Testing: 02_tool_use
+======================================================================
+  hello_world_reflection ... ❌ FAIL
+    Error: Eval module is not installed, please install via `pip install "google-adk[eval]"`.
+  tool_calling_basic ... ❌ FAIL
+    Error: Eval module is not installed, please install via `pip install "google-adk[eval]"`.
+  simple_lookup ... ❌ FAIL
+    Error: Eval module is not installed, please install via `pip install "google-adk[eval]"`.
+  plan_then_act ... ❌ FAIL
+    Error: Eval module is not installed, please install via `pip install "google-adk[eval]"`.
+  Summary: ❌ FAILED (0/4 tests, 0%)
+
+======================================================================
+Testing: 03_ReAct
+======================================================================
+  hello_world_reflection ... ❌ FAIL
+    Error: Eval module is not installed, please install via `pip install "google-adk[eval]"`.
+  tool_calling_basic ... ❌ FAIL
+    Error: Eval module is not installed, please install via `pip install "google-adk[eval]"`.
+  simple_lookup ... ❌ FAIL
+    Error: Eval module is not installed, please install via `pip install "google-adk[eval]"`.
+  plan_then_act ... ❌ FAIL
+    Error: Eval module is not installed, please install via `pip install "google-adk[eval]"`.
+  Summary: ❌ FAILED (0/4 tests, 0%)
+
+======================================================================
+Testing: 04_planning
+======================================================================
+  hello_world_reflection ... ❌ FAIL
+    Error: Eval module is not installed, please install via `pip install "google-adk[eval]"`.
+  tool_calling_basic ... ❌ FAIL
+    Error: Eval module is not installed, please install via `pip install "google-adk[eval]"`.
+  simple_lookup ... ❌ FAIL
+    Error: Eval module is not installed, please install via `pip install "google-adk[eval]"`.
+  plan_then_act ... ❌ FAIL
+    Error: Eval module is not installed, please install via `pip install "google-adk[eval]"`.
+  Summary: ❌ FAILED (0/4 tests, 0%)
+
+======================================================================
+Testing: 05_multi_agent
+======================================================================
+  hello_world_reflection ... ❌ FAIL
+    Error: Eval module is not installed, please install via `pip install "google-adk[eval]"`.
+  tool_calling_basic ... ❌ FAIL
+    Error: Eval module is not installed, please install via `pip install "google-adk[eval]"`.
+  simple_lookup ... ❌ FAIL
+    Error: Eval module is not installed, please install via `pip install "google-adk[eval]"`.
+  plan_then_act ... ❌ FAIL
+    Error: Eval module is not installed, please install via `pip install "google-adk[eval]"`.
+  Summary: ❌ FAILED (0/4 tests, 0%)
+
+======================================================================
+Testing: 06_PEV
+======================================================================
+  hello_world_reflection ... ❌ FAIL
+    Error: Eval module is not installed, please install via `pip install "google-adk[eval]"`.
+  tool_calling_basic ... ❌ FAIL
+    Error: Eval module is not installed, please install via `pip install "google-adk[eval]"`.
+  simple_lookup ... ❌ FAIL
+    Error: Eval module is not installed, please install via `pip install "google-adk[eval]"`.
+  plan_then_act ... ❌ FAIL
+    Error: Eval module is not installed, please install via `pip install "google-adk[eval]"`.
+  Summary: ❌ FAILED (0/4 tests, 0%)
+
+======================================================================
+Testing: 07_blackboard
+======================================================================
+  hello_world_reflection ... ❌ FAIL
+    Error: Eval module is not installed, please install via `pip install "google-adk[eval]"`.
+  tool_calling_basic ... ❌ FAIL
+    Error: Eval module is not installed, please install via `pip install "google-adk[eval]"`.
+  simple_lookup ... ❌ FAIL
+    Error: Eval module is not installed, please install via `pip install "google-adk[eval]"`.
+  plan_then_act ... ❌ FAIL
+    Error: Eval module is not installed, please install via `pip install "google-adk[eval]"`.
+  Summary: ❌ FAILED (0/4 tests, 0%)
+
+======================================================================
+Testing: 08_episodic_with_semantic
+======================================================================
+  hello_world_reflection ... ❌ FAIL
+    Error: Eval module is not installed, please install via `pip install "google-adk[eval]"`.
+  tool_calling_basic ... ❌ FAIL
+    Error: Eval module is not installed, please install via `pip install "google-adk[eval]"`.
+  simple_lookup ... ❌ FAIL
+    Error: Eval module is not installed, please install via `pip install "google-adk[eval]"`.
+  plan_then_act ... ❌ FAIL
+    Error: Eval module is not installed, please install via `pip install "google-adk[eval]"`.
+  Summary: ❌ FAILED (0/4 tests, 0%)
+
+======================================================================
+Testing: 09_tree_of_thoughts
+======================================================================
+  hello_world_reflection ... ❌ FAIL
+    Error: Eval module is not installed, please install via `pip install "google-adk[eval]"`.
+  tool_calling_basic ... ❌ FAIL
+    Error: Eval module is not installed, please install via `pip install "google-adk[eval]"`.
+  simple_lookup ... ❌ FAIL
+    Error: Eval module is not installed, please install via `pip install "google-adk[eval]"`.
+  plan_then_act ... ❌ FAIL
+    Error: Eval module is not installed, please install via `pip install "google-adk[eval]"`.
+  Summary: ❌ FAILED (0/4 tests, 0%)
+
+======================================================================
+Testing: 10_mental_loop
+======================================================================
+  hello_world_reflection ... ❌ FAIL
+    Error: Eval module is not installed, please install via `pip install "google-adk[eval]"`.
+  tool_calling_basic ... ❌ FAIL
+    Error: Eval module is not installed, please install via `pip install "google-adk[eval]"`.
+  simple_lookup ... ❌ FAIL
+    Error: Eval module is not installed, please install via `pip install "google-adk[eval]"`.
+  plan_then_act ... ❌ FAIL
+    Error: Eval module is not installed, please install via `pip install "google-adk[eval]"`.
+  Summary: ❌ FAILED (0/4 tests, 0%)
+
+======================================================================
+Testing: 11_meta_controller
+======================================================================
+  hello_world_reflection ... ❌ FAIL
+    Error: Eval module is not installed, please install via `pip install "google-adk[eval]"`.
+  tool_calling_basic ... ❌ FAIL
+    Error: Eval module is not installed, please install via `pip install "google-adk[eval]"`.
+  simple_lookup ... ❌ FAIL
+    Error: Eval module is not installed, please install via `pip install "google-adk[eval]"`.
+  plan_then_act ... ❌ FAIL
+    Error: Eval module is not installed, please install via `pip install "google-adk[eval]"`.
+  Summary: ❌ FAILED (0/4 tests, 0%)
+
+======================================================================
+Testing: 12_graph
+======================================================================
+  hello_world_reflection ... ❌ FAIL
+    Error: Eval module is not installed, please install via `pip install "google-adk[eval]"`.
+  tool_calling_basic ... ❌ FAIL
+    Error: Eval module is not installed, please install via `pip install "google-adk[eval]"`.
+  simple_lookup ... ❌ FAIL
+    Error: Eval module is not installed, please install via `pip install "google-adk[eval]"`.
+  plan_then_act ... ❌ FAIL
+    Error: Eval module is not installed, please install via `pip install "google-adk[eval]"`.
+  Summary: ❌ FAILED (0/4 tests, 0%)
+
+======================================================================
+Testing: 13_ensemble
+======================================================================
+  hello_world_reflection ... ❌ FAIL
+    Error: Eval module is not installed, please install via `pip install "google-adk[eval]"`.
+  tool_calling_basic ... ❌ FAIL
+    Error: Eval module is not installed, please install via `pip install "google-adk[eval]"`.
+  simple_lookup ... ❌ FAIL
+    Error: Eval module is not installed, please install via `pip install "google-adk[eval]"`.
+  plan_then_act ... ❌ FAIL
+    Error: Eval module is not installed, please install via `pip install "google-adk[eval]"`.
+  Summary: ❌ FAILED (0/4 tests, 0%)
+
+======================================================================
+Testing: 14_dry_run
+======================================================================
+  hello_world_reflection ... ❌ FAIL
+    Error: Eval module is not installed, please install via `pip install "google-adk[eval]"`.
+  tool_calling_basic ... ❌ FAIL
+    Error: Eval module is not installed, please install via `pip install "google-adk[eval]"`.
+  simple_lookup ... ❌ FAIL
+    Error: Eval module is not installed, please install via `pip install "google-adk[eval]"`.
+  plan_then_act ... ❌ FAIL
+    Error: Eval module is not installed, please install via `pip install "google-adk[eval]"`.
+  Summary: ❌ FAILED (0/4 tests, 0%)
+
+======================================================================
+Testing: 15_RLHF
+======================================================================
+  hello_world_reflection ... ❌ FAIL
+    Error: Eval module is not installed, please install via `pip install "google-adk[eval]"`.
+  tool_calling_basic ... ❌ FAIL
+    Error: Eval module is not installed, please install via `pip install "google-adk[eval]"`.
+  simple_lookup ... ❌ FAIL
+    Error: Eval module is not installed, please install via `pip install "google-adk[eval]"`.
+  plan_then_act ... ❌ FAIL
+    Error: Eval module is not installed, please install via `pip install "google-adk[eval]"`.
+  Summary: ❌ FAILED (0/4 tests, 0%)
+
+======================================================================
+Testing: 16_cellular_automata
+======================================================================
+  hello_world_reflection ... ❌ FAIL
+    Error: Eval module is not installed, please install via `pip install "google-adk[eval]"`.
+  tool_calling_basic ... ❌ FAIL
+    Error: Eval module is not installed, please install via `pip install "google-adk[eval]"`.
+  simple_lookup ... 

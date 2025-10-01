@@ -15,6 +15,7 @@ from dataclasses import dataclass, field
 from google.adk.agents import Agent, BaseAgent, LlmAgent, SequentialAgent, LoopAgent, ParallelAgent
 from google.adk.agents.invocation_context import InvocationContext
 from google.adk.events import Event, EventActions
+from google.genai import types
 
 # --- Graph Database Simulation ---
 KNOWLEDGE_GRAPH = {} # Simulates a graph store: {entity: {relationship: [entity]}}
@@ -103,7 +104,11 @@ class GraphAgent(BaseAgent):
             yield event
             
         response = ctx.session.state.get(self.querier.output_key, "")
-        yield Event(author=self.name, content={"parts": [{"text": response}]})
+        yield Event(
+            invocation_id=ctx.invocation_id,
+            author=self.name,
+            content=types.Content(parts=[types.Part(text=response)])
+        )
 
 
 def build_agent_from_config(config: Union[SubAgentConfig, WorkflowAgentConfig]) -> BaseAgent:

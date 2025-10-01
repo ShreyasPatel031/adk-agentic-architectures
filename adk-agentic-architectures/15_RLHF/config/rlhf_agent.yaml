@@ -1,15 +1,47 @@
-name: RlhfAgent
+name: RLHFAgent
 architecture: sequential
 sub_agents:
-  - name: Generator
+  # First: Generate initial draft
+  - name: Draft
     model: gemini-2.5-flash-lite
-    instruction: "You are a generator. Your job is to generate a response to the user's request."
-    output_key: "generated_response"
-  - name: Critic
-    model: gemini-2.5-flash-lite
-    instruction: "You are a critic. Your job is to critique the generated response: {generated_response} and provide feedback for improvement."
-    output_key: "critique"
-  - name: Refiner
-    model: gemini-2.5-flash-lite
-    instruction: "You are a refiner. Your job is to refine the generated response based on the critique: {critique}."
-    output_key: "refined_response"
+    instruction: |
+      You are a draft generator. 
+      Create an initial response to the user's request.
+      Your draft will be refined through critique and revision.
+    tools:
+      - google_search
+    output_key: "draft"
+  
+  # Second: Iterative critique-revise loop
+  - name: RefinementLoop
+    architecture: loop
+    max_iterations: 3
+    sub_agents:
+      - name: CriticReviseSequence
+        architecture: sequential
+        sub_agents:
+          # Critique current draft
+          - name: Critic
+            model: gemini-2.5-flash-lite
+            instruction: |
+              You are a critic. Analyze this draft: {draft}
+              
+              Provide constructive feedback on:
+              - Accuracy and completeness
+              - Clarity and coherence
+              - Areas for improvement
+              
+              Be specific and actionable.
+            output_key: "critique"
+          
+          # Revise based on critique
+          - name: Reviser
+            model: gemini-2.5-flash-lite
+            instruction: |
+              You are a reviser. Improve the draft based on this critique:
+              
+              Current draft: {draft}
+              Critique: {critique}
+              
+              Create an improved version that addresses the feedback.
+            output_key: "draft"

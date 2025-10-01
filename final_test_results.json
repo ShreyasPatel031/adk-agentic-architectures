@@ -1,0 +1,107 @@
+{
+  "test_date": "2025-10-01 07:12:17 UTC",
+  "agents": {
+    "01_reflection": {
+      "tests_passed": 4,
+      "tests_failed": 0,
+      "percent": 100,
+      "status": "✅ PERFECT"
+    },
+    "02_tool_use": {
+      "tests_passed": 0,
+      "tests_failed": 4,
+      "percent": 0,
+      "status": "❌ FAILED"
+    },
+    "03_ReAct": {
+      "tests_passed": 0,
+      "tests_failed": 4,
+      "percent": 0,
+      "status": "❌ FAILED"
+    },
+    "04_planning": {
+      "tests_passed": 3,
+      "tests_failed": 1,
+      "percent": 75,
+      "status": "✅ ACCEPTABLE"
+    },
+    "05_multi_agent": {
+      "tests_passed": 4,
+      "tests_failed": 0,
+      "percent": 100,
+      "status": "✅ PERFECT"
+    },
+    "06_PEV": {
+      "tests_passed": 2,
+      "tests_failed": 2,
+      "percent": 50,
+      "status": "⚠️  REVIEW"
+    },
+    "07_blackboard": {
+      "tests_passed": 0,
+      "tests_failed": 4,
+      "percent": 0,
+      "status": "❌ FAILED"
+    },
+    "08_episodic_with_semantic": {
+      "tests_passed": 4,
+      "tests_failed": 0,
+      "percent": 100,
+      "status": "✅ PERFECT"
+    },
+    "09_tree_of_thoughts": {
+      "tests_passed": 4,
+      "tests_failed": 0,
+      "percent": 100,
+      "status": "✅ PERFECT"
+    },
+    "10_mental_loop": {
+      "tests_passed": 1,
+      "tests_failed": 3,
+      "percent": 25,
+      "status": "❌ FAILED"
+    },
+    "11_meta_controller": {
+      "tests_passed": 2,
+      "tests_failed": 2,
+      "percent": 50,
+      "status": "⚠️  REVIEW"
+    },
+    "12_graph": {
+      "tests_passed": 2,
+      "tests_failed": 2,
+      "percent": 50,
+      "status": "⚠️  REVIEW"
+    },
+    "13_ensemble": {
+      "tests_passed": 4,
+      "tests_failed": 0,
+      "percent": 100,
+      "status": "✅ PERFECT"
+    },
+    "14_dry_run": {
+      "tests_passed": 0,
+      "tests_failed": 4,
+      "percent": 0,
+      "status": "❌ FAILED"
+    },
+    "15_RLHF": {
+      "tests_passed": 3,
+      "tests_failed": 1,
+      "percent": 75,
+      "status": "✅ ACCEPTABLE"
+    },
+    "16_cellular_automata": {
+      "tests_passed": 0,
+      "tests_failed": 4,
+      "percent": 0,
+      "status": "❌ FAILED"
+    },
+    "17_reflexive_metacognitive": {
+      "tests_passed": 2,
+      "tests_failed": 2,
+      "percent": 50,
+      "status": "⚠️  REVIEW"
+    }
+  }
+}

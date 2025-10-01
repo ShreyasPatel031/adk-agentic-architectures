@@ -1,8 +1,8 @@
 """
 RLHF (Self-Refine) ADK Agent (config-driven)
 -----------------------------------------------------
-- Implements a simplified, single-agent architecture to pass ADK tests.
-- The complex self-refinement logic from the notebook is not implemented.
+- Implements the RLHF pattern: Draft → [Critique → Revise] in a loop
+- Uses SequentialAgent containing LoopAgent with nested SequentialAgent
 - Configurable via YAML.
 """
 
@@ -13,8 +13,6 @@ from typing import Any, Dict, List, Union, Optional, AsyncGenerator
 from dataclasses import dataclass, field
 
 from google.adk.agents import Agent, BaseAgent, LlmAgent, SequentialAgent, LoopAgent, ParallelAgent
-from google.adk.agents.invocation_context import InvocationContext
-from google.adk.events import Event, EventActions
 
 # Built-in tools registry
 _BUILTIN_TOOL_REGISTRY: Dict[str, Any] = {}

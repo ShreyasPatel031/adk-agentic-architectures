@@ -84,7 +84,11 @@ class StopChecker(BaseAgent):
         except (json.JSONDecodeError, AttributeError):
             pass # If output is not as expected, continue the loop
             
-        yield Event(author=self.name, actions=EventActions(escalate=should_stop))
+        yield Event(
+            invocation_id=ctx.invocation_id,
+            author=self.name,
+            actions=EventActions(escalate=should_stop)
+        )
 
 def resolve_tools(names: List[str]) -> List[Any]:
     _maybe_import_builtin_tools()

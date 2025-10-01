@@ -15,6 +15,7 @@ from dataclasses import dataclass, field
 from google.adk.agents import Agent, BaseAgent, LlmAgent, SequentialAgent, LoopAgent, ParallelAgent
 from google.adk.agents.invocation_context import InvocationContext
 from google.adk.events import Event, EventActions
+from google.genai import types
 
 # Built-in tools registry
 _BUILTIN_TOOL_REGISTRY: Dict[str, Any] = {}
@@ -99,9 +100,17 @@ class DryRunAgent(BaseAgent):
             async for event in self.executor.run_async(ctx):
                 yield event
             response = ctx.session.state.get(self.executor.output_key, "")
-            yield Event(author=self.name, content={"parts": [{"text": response}]})
+            yield Event(
+                invocation_id=ctx.invocation_id,
+                author=self.name,
+                content=types.Content(parts=[types.Part(text=response)])
+            )
         else:
-            yield Event(author=self.name, content={"parts": [{"text": "Plan rejected by automated review."}]})
+            yield Event(
+                invocation_id=ctx.invocation_id,
+                author=self.name,
+                content=types.Content(parts=[types.Part(text="Plan rejected by automated review.")])
+            )
 
 
 def build_agent_from_config(config: Union[SubAgentConfig, WorkflowAgentConfig]) -> BaseAgent:
