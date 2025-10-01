@@ -15,6 +15,7 @@ from dataclasses import dataclass, field
 from google.adk.agents import Agent, BaseAgent, LlmAgent, SequentialAgent, LoopAgent
 from google.adk.agents.invocation_context import InvocationContext
 from google.adk.events import Event, EventActions
+from google.genai import types
 
 # Built-in tools registry
 _BUILTIN_TOOL_REGISTRY: Dict[str, Any] = {}
@@ -112,7 +113,11 @@ class BlackboardAgent(BaseAgent):
                 final_result = "Controller chose an invalid specialist. Ending process."
                 break
         
-        yield Event(author=self.name, content={"parts": [{"text": final_result}]})
+        yield Event(
+            invocation_id=ctx.invocation_id,
+            author=self.name,
+            content=types.Content(parts=[types.Part(text=final_result)])
+        )
 
 
 def build_agent_from_config(config: Union[SubAgentConfig, WorkflowAgentConfig]) -> BaseAgent:

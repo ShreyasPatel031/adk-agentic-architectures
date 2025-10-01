@@ -46,7 +46,11 @@ class StopChecker(BaseAgent):
         except (json.JSONDecodeError, AttributeError):
             pass
 
-        yield Event(author=self.name, actions=EventActions(escalate=should_stop))
+        yield Event(
+            invocation_id=ctx.invocation_id,
+            author=self.name,
+            actions=EventActions(escalate=should_stop)
+        )
 
 @dataclass
 class SubAgentConfig:
